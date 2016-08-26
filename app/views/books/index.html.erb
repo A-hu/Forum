@@ -5,8 +5,10 @@
 			<th>Name</th>
 			<th>Author</th>
 			<th>Show</th>
-			<th>Edit</th>
-			<th>Delete</th>
+			<%if current_user%>
+				<th>Edit</th>
+				<th>Delete</th>
+			<%end%>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,7 +26,8 @@
 		<%end%>
 	</tbody>
 </table>
-
-<%= link_to "New book", new_book_path%>
+<%if current_user%>
+	<%= link_to "New book", new_book_path%>
+<%end%>
 <%= paginate @books %>
 
