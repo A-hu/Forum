@@ -11,6 +11,13 @@ class BooksController < ApplicationController
 	end
 
 	def show
+		if params[:eid].present?
+			@comment = @book.comments.find(params[:eid])
+		else
+			@comment = Comment.new
+		end
+
+		@comments = @book.comments.page( params[:page] ).per(5)
 	end
 
 	def new
@@ -19,7 +26,7 @@ class BooksController < ApplicationController
 
 	def create
 		@book = Book.new(set_params)
-		@book.user_id = @user.id
+		@book.user = current_user
 		if @book.save
 			flash[:notice] = "Added success"
 			redirect_to book_path(@book, page: params[:page])

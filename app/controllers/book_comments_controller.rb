@@ -28,7 +28,7 @@ class BookCommentsController < ApplicationController
 		@comment.user = current_user
 		if @comment.save
 			flash[:notice] = "Add comment success"
-			redirect_to book_comments_path(@book,page: params[:page])
+			redirect_to book_path(@book, page: params[:page])
 		else
 			flash[:alert] = "Add comment fail"
 			render 'index'
@@ -41,7 +41,7 @@ class BookCommentsController < ApplicationController
 	def update
 		if @comment.update(set_params)
 			flash[:notice] = "Edit comment success"
-			redirect_to book_comments_path(@book, page: params[:page])
+			redirect_to book_path(@book, page: params[:page])
 		else
 			flash[:alert] = "Edit comment fail"
 			render 'index'
@@ -51,7 +51,7 @@ class BookCommentsController < ApplicationController
 	def destroy
 		@comment.destroy
 		flash[:alert] = "Delete success"
-		redirect_to book_comments_path(@book)
+		redirect_to book_path(@book)
 	end
 
 

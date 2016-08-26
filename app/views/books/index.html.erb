@@ -4,7 +4,7 @@
 		<tr>
 			<th>Book name</th>
 			<th>Author</th>
-			<th>Comments</th>
+			<th>Comment number</th>
 			<%if current_user%>
 				<th>Edit</th>
 				<th>Delete</th>
@@ -17,8 +17,7 @@
 		<tr>			
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
 			<td><%= book.user.short_name%></td>
-			
-			<td><%= link_to "Comments", book_comments_path(book, page: params[:page])%></td>
+			<td><%= book.comments.count%></td>
 			<%if current_user && current_user == book.user%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
 				<td><%= link_to "Delete", book_path(book, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>
