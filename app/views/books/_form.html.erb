@@ -2,5 +2,6 @@
 	<%= b.text_field :name%>
 	<%= b.label :description%>
 	<%= b.text_area :description%>
+	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
 	<%= b.submit%>
 	<%= hidden_field_tag :page, params[:page] %>

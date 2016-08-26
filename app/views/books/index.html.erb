@@ -1,3 +1,5 @@
+
+
 <br>
 <%= link_to 'Sort by update time', books_path(:order => 'update_time')%>
 <br>
@@ -5,6 +7,15 @@
 <br>
 <%= link_to 'Sort by default', books_path(:order => 'ids')%>
 <br>
+<%= link_to "About", about_books_path%>
+
+<%= form_tag books_path, :method => :get do%>
+	<%= submit_tag "Comedy"%>
+	<%= submit_tag "Tragedy"%>
+	<%= submit_tag "NObody"%>
+<%end%>
+
+
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -19,7 +30,6 @@
 		</tr>
 	</thead>
 	<tbody>
-
 		<% @books.each do |book|%>
 		<tr>			
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>

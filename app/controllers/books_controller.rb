@@ -7,6 +7,7 @@ class BooksController < ApplicationController
 		@users = User.all
 		@books = Book.all
 
+
 		if params[:order].present?
 			if  params[:order] == "update_time"
 				sort_by = "updated_at DESC"
@@ -18,6 +19,16 @@ class BooksController < ApplicationController
 			@books = @books.order(sort_by)	
 		end
 
+		# if params[:commit] == "Comedy"
+		# 	@books = Book.where(@books.group.name == "Comedy")
+		# elsif params[:commit] == "Tragedy"
+		# 	@books = Book.where(@books.group.name == "Tragedy")
+		# elsif params[:commit] == "NObody"
+		# 	@books = Book.where(@books.group.name == "NObody")
+		# else
+		# 	@books = Book.all
+		# end
+
 		@books = @books.page( params[:page] ).per(10)
 
 	end
@@ -27,12 +38,18 @@ class BooksController < ApplicationController
 			@comment = @book.comments.find(params[:eid])
 		else
 			@comment = Comment.new
-
 		end
+	end
 
+	def about
+		@users = User.all
+		@books = Book.all
+		@comments = Comment.all
+	end
 
-
-		@comments = @book.comments.page( params[:page] ).per(5)
+	def profile
+		@users = User.all
+		@books = Book.all
 	end
 
 	def new
@@ -42,6 +59,7 @@ class BooksController < ApplicationController
 	def create
 		@book = Book.new(set_params)
 		@book.user = current_user
+		@book.comment_number = 0
 		if @book.save
 			flash[:notice] = "Added success"
 			redirect_to book_path(@book, page: params[:page])
@@ -73,7 +91,8 @@ class BooksController < ApplicationController
 	private
 
 	def set_params
-		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id)
+		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id,
+									 group_ids: [])
 	end
 
 	def set_before
