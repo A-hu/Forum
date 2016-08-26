@@ -1,10 +1,17 @@
-
+<br>
+<%= link_to 'Sort by update time', books_path(:order => 'update_time')%>
+<br>
+<%= link_to 'Sort by comments', books_path(:order => 'comments')%>
+<br>
+<%= link_to 'Sort by default', books_path(:order => 'ids')%>
+<br>
 <table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Book name</th>
 			<th>Author</th>
 			<th>Comment number</th>
+			<th>Update time</th>
 			<%if current_user%>
 				<th>Edit</th>
 				<th>Delete</th>
@@ -17,7 +24,8 @@
 		<tr>			
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
 			<td><%= book.user.short_name%></td>
-			<td><%= book.comments.count%></td>
+			<td><%= book.comment_number%></td>
+			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
 			<%if current_user && current_user == book.user%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
 				<td><%= link_to "Delete", book_path(book, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>

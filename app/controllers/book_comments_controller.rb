@@ -26,7 +26,8 @@ class BookCommentsController < ApplicationController
 	def create
 		@comment = @book.comments.new(set_params)
 		@comment.user = current_user
-		if @comment.save
+		@book.comment_number += 1
+		if @comment.save && @book.save
 			flash[:notice] = "Add comment success"
 			redirect_to book_path(@book, page: params[:page])
 		else

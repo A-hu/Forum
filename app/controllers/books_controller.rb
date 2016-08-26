@@ -6,6 +6,18 @@ class BooksController < ApplicationController
 	def index
 		@users = User.all
 		@books = Book.all
+
+		if params[:order].present?
+			if  params[:order] == "update_time"
+				sort_by = "updated_at DESC"
+			elsif params[:order] == "ids"
+				sort_by = 'id ASC'
+			elsif params[:order] == "comments"
+				sort_by = 'comment_number DESC'
+			end
+			@books = @books.order(sort_by)	
+		end
+
 		@books = @books.page( params[:page] ).per(10)
 
 	end
@@ -15,7 +27,10 @@ class BooksController < ApplicationController
 			@comment = @book.comments.find(params[:eid])
 		else
 			@comment = Comment.new
+
 		end
+
+
 
 		@comments = @book.comments.page( params[:page] ).per(5)
 	end
@@ -58,7 +73,7 @@ class BooksController < ApplicationController
 	private
 
 	def set_params
-		params.require(:book).permit(:name,:description, :user_id)
+		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id)
 	end
 
 	def set_before
