@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-md-12">
           <% if current_user%>
-              <h3> <%= current_user.try(:short_name)%>, you are in AC bookstore.</h3>
+              <h3> <%= link_to current_user.try(:short_name), user_path(current_user)%>, you are in AC bookstore.</h3>
             <%end%>
         	<p style="color: green"><%= flash[:notice] %></p>
           <p style="color: red"><%= flash[:alert] %></p>

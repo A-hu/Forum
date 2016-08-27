@@ -7,13 +7,13 @@ class BookCommentsController < ApplicationController
 
 	def index
 
-		if params[:eid].present?
-			@comment = @book.comments.find(params[:eid])
-		else
-			@comment = Comment.new
-		end
+		# if params[:eid].present?
+		# 	@comment = @book.comments.find(params[:eid])
+		# else
+		# 	@comment = Comment.new
+		# end
 
-		@comments = @book.comments.page( params[:page] ).per(5)
+		# @comments = @book.comments.page( params[:page] ).per(5)
 	end
 
 	def show

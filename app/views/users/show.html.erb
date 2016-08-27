@@ -1,0 +1,36 @@
+<h3>This is <%= @user.first_name %> <%= @user.last_name %>'s profile</h3>
+<h3>introduction: <%= @user.introduction%></h3>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Public Books</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<% @user.books.each do |b| %>
+			<tr>
+				<td><%= b.name%></td>
+			</tr>
+			<%end%>
+	</tbody>
+
+</table>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Books</th>
+			<th>Comments from <%= @user.last_name%></th>
+		</tr>
+	</thead>
+	<tbody>		
+			<% @user.comments.each do |b| %>
+			<tr>
+				<td><%= b.book.name%></td>
+				<td><%= b.description%></td>
+			</tr>
+			<%end%>
+	</tbody>
+
+</table>

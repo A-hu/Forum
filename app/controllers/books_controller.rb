@@ -7,7 +7,6 @@ class BooksController < ApplicationController
 		@users = User.all
 		@books = Book.all
 
-
 		if params[:order].present?
 			if  params[:order] == "update_time"
 				sort_by = "updated_at DESC"
@@ -19,16 +18,17 @@ class BooksController < ApplicationController
 			@books = @books.order(sort_by)	
 		end
 
-		# if params[:commit] == "Comedy"
-		# 	@books = Book.where(@books.group.name == "Comedy")
-		# elsif params[:commit] == "Tragedy"
-		# 	@books = Book.where(@books.group.name == "Tragedy")
-		# elsif params[:commit] == "NObody"
-		# 	@books = Book.where(@books.group.name == "NObody")
-		# else
-		# 	@books = Book.all
+		# if params[:commit].present?
+		# 	if params[:commit] == "Comedy"
+		# 		@books = Book.where(group_ids: [1])
+		# 	elsif params[:commit] == "Tragedy"
+		# 		@books = Book.where("group_ids < [?]", 2)
+		# 	elsif params[:commit] == "NObody"
+		# 		@books = Book.where("group_ids < [?]", 3)
+		# 	else
+		# 		@books = Book.all
+		# 	end
 		# end
-
 		@books = @books.page( params[:page] ).per(10)
 
 	end
@@ -39,17 +39,13 @@ class BooksController < ApplicationController
 		else
 			@comment = Comment.new
 		end
+		@comments = @book.comments.page( params[:page] ).per(10)
 	end
 
 	def about
 		@users = User.all
 		@books = Book.all
 		@comments = Comment.all
-	end
-
-	def profile
-		@users = User.all
-		@books = Book.all
 	end
 
 	def new
