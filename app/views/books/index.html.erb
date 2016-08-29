@@ -1,11 +1,11 @@
 
 
 <br>
-<%= link_to 'Sort by update time', books_path(:order => 'update_time')%>
+<%= link_to 'Sort by update time', books_path(:order => 'update_time', :commit => params[:commit])%>
 <br>
-<%= link_to 'Sort by comments', books_path(:order => 'comments')%>
+<%= link_to 'Sort by comments', books_path(:order => 'comments', :commit => params[:commit])%>
 <br>
-<%= link_to 'Sort by default', books_path(:order => 'ids')%>
+<%= link_to 'Sort by default', books_path(:order => 'ids', :commit => params[:commit])%>
 <br>
 <%= link_to "About", about_books_path%>
 
@@ -13,6 +13,7 @@
 	<%= submit_tag "Comedy"%>
 	<%= submit_tag "Tragedy"%>
 	<%= submit_tag "NObody"%>
+	<%= submit_tag "All"%>
 <%end%>
 
 

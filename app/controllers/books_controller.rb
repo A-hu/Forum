@@ -6,29 +6,32 @@ class BooksController < ApplicationController
 	def index
 		@users = User.all
 		@books = Book.all
+		if params[:commit].present?
+			if params[:commit] == "Comedy"
+				@books = Book.includes(:groups).where('groups.id' => 1)
+			elsif params[:commit] == "Tragedy"
+				@books = Book.includes(:groups).where('groups.id' => 2)
+			elsif params[:commit] == "NObody"
+				@books = Book.includes(:groups).where('groups.id' => 3)
+			else
+				@books = Book.all
+			end
+		end
 
 		if params[:order].present?
 			if  params[:order] == "update_time"
-				sort_by = "updated_at DESC"
+				sort_by = {updated_at: :DESC}
 			elsif params[:order] == "ids"
-				sort_by = 'id ASC'
+				sort_by = {id: :ASC}
 			elsif params[:order] == "comments"
-				sort_by = 'comment_number DESC'
+				sort_by = {comment_number: :DESC}
+			else
+				@books = Book.all
 			end
 			@books = @books.order(sort_by)	
 		end
 
-		# if params[:commit].present?
-		# 	if params[:commit] == "Comedy"
-		# 		@books = Book.where(group_ids: [1])
-		# 	elsif params[:commit] == "Tragedy"
-		# 		@books = Book.where("group_ids < [?]", 2)
-		# 	elsif params[:commit] == "NObody"
-		# 		@books = Book.where("group_ids < [?]", 3)
-		# 	else
-		# 		@books = Book.all
-		# 	end
-		# end
+
 		@books = @books.page( params[:page] ).per(10)
 
 	end
