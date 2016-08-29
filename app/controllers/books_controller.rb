@@ -25,6 +25,8 @@ class BooksController < ApplicationController
 				sort_by = {id: :ASC}
 			elsif params[:order] == "comments"
 				sort_by = {comment_number: :DESC}
+			elsif params[:order] == "views"
+				sort_by = {views: :DESC}
 			else
 				@books = Book.all
 			end
@@ -42,6 +44,8 @@ class BooksController < ApplicationController
 		else
 			@comment = Comment.new
 		end
+		@book.views += 1
+		@book.save
 		@comments = @book.comments.page( params[:page] ).per(10)
 	end
 
@@ -59,6 +63,7 @@ class BooksController < ApplicationController
 		@book = Book.new(set_params)
 		@book.user = current_user
 		@book.comment_number = 0
+		@book.views = 0
 		if @book.save
 			flash[:notice] = "Added success"
 			redirect_to book_path(@book, page: params[:page])

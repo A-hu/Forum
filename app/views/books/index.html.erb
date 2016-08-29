@@ -5,6 +5,8 @@
 <br>
 <%= link_to 'Sort by comments', books_path(:order => 'comments', :commit => params[:commit])%>
 <br>
+<%= link_to 'Sort by views', books_path(:order => 'views', :commit => params[:commit])%>
+<br>
 <%= link_to 'Sort by default', books_path(:order => 'ids', :commit => params[:commit])%>
 <br>
 <%= link_to "About", about_books_path%>
@@ -23,6 +25,8 @@
 			<th>Book name</th>
 			<th>Author</th>
 			<th>Comment number</th>
+			<th>Comments from</th>
+			<th>Views</th>
 			<th>Update time</th>
 			<%if current_user%>
 				<th>Edit</th>
@@ -36,6 +40,17 @@
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
 			<td><%= link_to book.user.short_name, user_path(book.user)%></td>
 			<td><%= book.comment_number%></td>
+			<td>
+				<% b = []%>
+				<% book.comments.each do |c|%>
+					<% b << c.user.short_name%>
+				<%end%>
+				<% b = b.uniq%>
+					<% b.each do |u| %>
+				<p><%=  u %></p>
+				<%end%>
+			</td>
+			<td><%= book.views%></td>
 			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
 			<%if current_user && current_user == book.user%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
