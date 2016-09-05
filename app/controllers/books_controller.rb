@@ -5,16 +5,15 @@ class BooksController < ApplicationController
 
 	def index
 		@users = User.all
-		@books = Book.all
+		@books = Book.where(is_public: true).includes(:groups)
+
 		if params[:commit].present?
 			if params[:commit] == "Comedy"
-				@books = Book.includes(:groups).where('groups.id' => 1)
+				@books = @books.where('groups.id' => 1)
 			elsif params[:commit] == "Tragedy"
-				@books = Book.includes(:groups).where('groups.id' => 2)
+				@books = @books.where('groups.id' => 2)
 			elsif params[:commit] == "NObody"
-				@books = Book.includes(:groups).where('groups.id' => 3)
-			else
-				@books = Book.all
+				@books = @books.where('groups.id' => 3)
 			end
 		end
 
@@ -27,8 +26,6 @@ class BooksController < ApplicationController
 				sort_by = {comment_number: :DESC}
 			elsif params[:order] == "views"
 				sort_by = {views: :DESC}
-			else
-				@books = Book.all
 			end
 			@books = @books.order(sort_by)	
 		end
@@ -47,7 +44,8 @@ class BooksController < ApplicationController
 		@book.views += 1
 		@user = current_user
 		@book.save
-		@comments = @book.comments.page( params[:page] ).per(10)
+		@comments = @book.comments.where(is_public: true)
+		@comments = @comments.page( params[:page] ).per(5)
 	end
 
 	def about
@@ -66,7 +64,14 @@ class BooksController < ApplicationController
 		@book.comment_number = 0
 		@book.views = 0
 		if @book.save
-			flash[:notice] = "Added success"
+			if params[:commit] == "draft"
+				@book.update(is_public: false)
+				flash[:notice] = "Added file into draft" 
+			else
+				@book.update(is_public: true)
+				flash[:notice] = "Added success"
+			end
+			
 			redirect_to book_path(@book, page: params[:page])
 		else
 			flash[:alert] = "Added fail"
@@ -79,7 +84,14 @@ class BooksController < ApplicationController
 
 	def update
 		if @book.update(set_params)
-			flash[:notice] = "Editted success"
+			if params[:commit] == "draft"
+				@book.update(is_public: false)
+				flash[:notice] = "Editted file into draft" 
+			else
+				@book.update(is_public: true)
+				flash[:notice] = "Editted success"
+			end
+			
 			redirect_to book_path(@book, page: params[:page])
 		else
 			flash[:alert] = "Editted fail"
@@ -106,7 +118,7 @@ class BooksController < ApplicationController
 	private
 
 	def set_params
-		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id,
+		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id, :is_public,
 									 group_ids: [], book_ids: [])
 	end
 

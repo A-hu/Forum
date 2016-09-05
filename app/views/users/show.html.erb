@@ -24,8 +24,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		
-			<% @user.book_ids.each do |b| %>
+			<% @user.collected_books.each do |b| %>
 			<tr>
 				<td><%= Book.find(b).name%></td>
 			</tr>
@@ -49,5 +48,41 @@
 			</tr>
 			<%end%>
 	</tbody>
-
 </table>
+<%if current_user && current_user == @user%>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Books in draft</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>		
+				<% @books.each do |b| %>
+				<tr>
+					<td><%= b.name%></td>
+					<td><%= link_to "Edit", edit_book_path(b)%></td>
+				</tr>
+				<%end%>
+		</tbody>
+	</table>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Books</th>
+				<th>Comments in draft</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>		
+				<% @comments.each do |c| %>
+				<tr>
+					<td><%= c.book.name%></td>
+					<td><%= c.description%></td>
+					<td><%= link_to "Edit", book_path(c.book, eid: c.id)%></td>
+				</tr>
+				<%end%>
+		</tbody>
+	</table>
+<%end%>

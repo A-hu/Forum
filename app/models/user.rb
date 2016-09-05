@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :comments
 
   has_many :user_bookships
-  has_many :collected_books, through: :user_bookships, :class_name => "Book"
+  has_many :collected_books, through: :user_bookships, :source => :book
 
   def short_name
   	self.email.split("@").first

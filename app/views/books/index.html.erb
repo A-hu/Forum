@@ -32,13 +32,8 @@
 			<td><%= link_to book.user.short_name, user_path(book.user)%></td>
 			<td><%= book.comment_number%></td>
 			<td>
-				<% b = []%>
-				<% book.comments.each do |c|%>
-					<% b << c.user.short_name%>
-				<%end%>
-				<% b = b.uniq%>
-					<% b.each do |u| %>
-				<p><%=  u %></p>
+				<% book.user_uniq.each do |u| %>
+				<p><%= u %></p>
 				<%end%>
 			</td>
 			<td><%= book.views%></td>

@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 	before_action :set_before
 
 	def show
-		
-		
+		@books = @user.owner_books.where(is_public: false)
+		@comments = @user.comments.where(is_public: false)
 	end
 
 	def edit

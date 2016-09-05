@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829131228) do
+ActiveRecord::Schema.define(version: 20160905101829) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160829131228) do
     t.datetime "updated_at",  null: false
     t.string   "description"
     t.integer  "user_id"
+    t.boolean  "is_public"
     t.index ["book_id"], name: "index_comments_on_book_id"
   end
 
