@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :set_before, only: [:show, :edit, :update, :destroy]
+	before_action :set_before, only: [:show, :edit, :update, :collection, :destroy]
 
 	def index
 		@users = User.all
@@ -45,6 +45,7 @@ class BooksController < ApplicationController
 			@comment = Comment.new
 		end
 		@book.views += 1
+		@user = current_user
 		@book.save
 		@comments = @book.comments.page( params[:page] ).per(10)
 	end
@@ -86,6 +87,16 @@ class BooksController < ApplicationController
 		end
 	end
 
+	def collection
+		# @userbookship = UserBookship.create(
+		# 	:user_id => current_user.id,
+		# 	:book_id => @book.id
+		# 	)
+		current_user.collected_books << @book
+
+		redirect_to user_path(current_user)
+	end
+
 	def destroy
 		@book.destroy
 		flash[:alert] = "Delete success"
@@ -96,7 +107,7 @@ class BooksController < ApplicationController
 
 	def set_params
 		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id,
-									 group_ids: [])
+									 group_ids: [], book_ids: [])
 	end
 
 	def set_before

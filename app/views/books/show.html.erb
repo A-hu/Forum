@@ -1,4 +1,9 @@
 <h3>Book name: <%= @book.name%></h3>
+<%=button_to "collection", collection_book_path(@book)%>
+
+<!-- <button>Collect into my books <% @user.book_ids << @book.id%>
+</button> -->
+
 <h3>Book description: <%= @book.description%></h3>
 <h3>Aurthor name: <%= @book.user.short_name%></h3>
 <h3>Group name: </h3>

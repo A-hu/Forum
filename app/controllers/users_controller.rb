@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 	before_action :set_before
 
 	def show
+		
+		
 	end
 
 	def edit

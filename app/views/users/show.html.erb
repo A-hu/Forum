@@ -1,4 +1,4 @@
-<h3>This is <%= @user.first_name %> <%= @user.last_name %>'s profile</h3>
+<h3>This is <%= @user.short_name %>'s profile</h3>
 <h3>introduction: <%= @user.introduction%></h3>
 <table class="table table-striped">
 	<thead>
@@ -8,9 +8,26 @@
 	</thead>
 	<tbody>
 		
-			<% @user.books.each do |b| %>
+			<% @user.owner_books.each do |b| %>
 			<tr>
 				<td><%= b.name%></td>
+			</tr>
+			<%end%>
+	</tbody>
+
+</table>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Collection</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+			<% @user.book_ids.each do |b| %>
+			<tr>
+				<td><%= Book.find(b).name%></td>
 			</tr>
 			<%end%>
 	</tbody>

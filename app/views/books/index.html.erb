@@ -1,14 +1,4 @@
 
-
-<br>
-<%= link_to 'Sort by update time', books_path(:order => 'update_time', :commit => params[:commit])%>
-<br>
-<%= link_to 'Sort by comments', books_path(:order => 'comments', :commit => params[:commit])%>
-<br>
-<%= link_to 'Sort by views', books_path(:order => 'views', :commit => params[:commit])%>
-<br>
-<%= link_to 'Sort by default', books_path(:order => 'ids', :commit => params[:commit])%>
-<br>
 <%= link_to "About", about_books_path%>
 
 <%= form_tag books_path, :method => :get do%>
@@ -18,16 +8,17 @@
 	<%= submit_tag "All"%>
 <%end%>
 
+<%= link_to 'Sort by default', books_path(:order => 'ids', :commit => params[:commit])%>
 
 <table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Book name</th>
 			<th>Author</th>
-			<th>Comment number</th>
+			<th><%= link_to "Comment number", books_path(:order => 'comments', :commit => params[:commit])%></th>
 			<th>Comments from</th>
-			<th>Views</th>
-			<th>Update time</th>
+			<th><%= link_to "Views", books_path(:order => 'views', :commit => params[:commit])%></th>
+			<th><%= link_to "Update time", books_path(:order => 'update_time', :commit => params[:commit])%></th>
 			<%if current_user%>
 				<th>Edit</th>
 				<th>Delete</th>
