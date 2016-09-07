@@ -20,6 +20,8 @@
           <%= yield %>
           <%= link_to "Editing groups for books ", admin_groups_path%>
           <br>
+          <%= link_to "Users management ", admin_users_path%>
+          <br>
           <%= link_to "Back to bookstore", books_path(page: params[:page])%>
         </div>
       </div>

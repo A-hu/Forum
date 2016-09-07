@@ -2,6 +2,7 @@ class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
 	before_action :set_before, only: [:show, :edit, :update, :collection, :destroy]
+	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
 			# if params[:commit] == "Comedy"
@@ -30,7 +31,7 @@ class BooksController < ApplicationController
 			# elsif params[:order] == "views"
 			# 	sort_by = 'views DESC'
 			# end
-			@books = @books.order("#{params[:order]} DESC")	if params[:order].present?
+		@books = @books.order("#{params[:order]} DESC")	if params[:order].present?
 		# end
 
 
@@ -62,22 +63,28 @@ class BooksController < ApplicationController
 	end
 
 	def create
-			@book = Book.new(set_params)
-			@book.user = current_user
-			@book.comment_number = 0
-			@book.views = 0
-		if @book.save
-			if params[:commit] == "Update Book"
-				@book.update(is_public: true) 
+		@book = Book.new(set_params)
+		@book.user = current_user
+		@book.comment_number = 0
+		@book.views = 0
+		
+		if params[:commit] == "Create Book" 
+			@book.update(is_public: true) 
+			if @book.save
 				flash[:notice] = "Add file success"
 			    redirect_to book_path(@book, page: params[:page])
 			else
+				flash[:alert] = "Add fail"
+				render 'edit'
+			end
+		elsif params[:commit] == "draft"
+			if @book.save
 				flash[:notice] = "Add file into draft"
 			    redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:alert] = "Add fail"
+				render 'edit'
 			end
-		else
-			flash[:alert] = "Add fail"
-			render 'edit'
 		end
 	end
 
@@ -85,19 +92,24 @@ class BooksController < ApplicationController
 	end
 
 	def update
-
-		if @book.update(set_params)	
-			if params[:commit] == "Update Book"
-			  @book.update(is_public: true) 
-			  flash[:notice] = "Editted file success"
-			  redirect_to book_path(@book, page: params[:page])
+			
+		if params[:commit] == "Update Book"
+			@book.update(is_public: true) 
+			if @book.update(set_params)
+				flash[:notice] = "Editted file success"
+				redirect_to book_path(@book, page: params[:page])
 			else
-			  flash[:notice] = "Editted file into draft"
-			  redirect_to book_path(@book, page: params[:page])
+				flash[:alert] = "Editted fail"
+				render 'edit'
 			end
-		else
-			flash[:alert] = "Editted fail"
-			render 'edit'
+		elsif params[:commit] == "draft"
+			if @book.update(set_params)
+				flash[:notice] = "Editted file into draft"
+				redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:alert] = "Editted fail"
+				render 'edit'
+			end
 		end
 		
 	end
@@ -134,5 +146,12 @@ class BooksController < ApplicationController
 
 	def set_before
 		@book = Book.find(params[:id])
+	end
+
+	def security
+		if current_user != @book.user && current_user.role != "admin"
+			flash[:alert] = "You are not allowed."
+			redirect_to books_path
+		end
 	end
 end

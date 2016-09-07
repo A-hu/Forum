@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :owner_books , :class_name => "Book" , :foreign_key => "user_id"
-  has_many :comments
+  has_many :owner_books , :class_name => "Book" , :foreign_key => "user_id", :dependent => :destroy
+  has_many :comments , :dependent => :destroy
 
   has_many :user_bookships
   has_many :collected_books, through: :user_bookships, :source => :book

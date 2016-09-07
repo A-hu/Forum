@@ -1,10 +1,10 @@
 class BookCommentsController < ApplicationController
 
 
-
+	before_action :authenticate_user!
 	before_action :find_book
 	before_action :set_before, only: [:show, :edit, :update, :destroy]
-
+	before_action :security, only: [:edit, :update, :destroy]
 	def index
 
 		# if params[:eid].present?
@@ -27,37 +27,49 @@ class BookCommentsController < ApplicationController
 		@comment = @book.comments.new(set_params)
 		@comment.user = current_user
 		@book.comment_number += 1
-		if @book.save && @comment.save
-			if params[:commit] == "Create Comment"
-				@comment.update(is_public: true) 
+		@book.save
+		
+		if params[:commit] == "Create Comment"
+			@comment.update(is_public: true) 
+			if @comment.save
 				flash[:notice] = "Add comment success"	
 				redirect_to book_path(@book)
 			else
+				flash[:alert] = "Add comment fail"
+				redirect_to book_path(@book)
+			end
+		elsif params[:commit] == "draft"
+			if @comment.save
 				flash[:notice] = "Add comment into draft"	
 				redirect_to book_path(@book)	
+			else
+				flash[:alert] = "Add comment fail"
+				redirect_to book_path(@book)
 			end
-		else
-			flash[:alert] = "Add comment fail"
-			redirect_to book_path(@book)
 		end	
 	end
 
 	# def edit
 	# end
 
-	def update
-		if @comment.update(set_params)
-			if params[:commit] == "Update Comment"
-				@comment.update(is_public: true) 
+	def update		
+		if params[:commit] == "Update Comment"
+			@comment.update(is_public: true) 
+			if @comment.update(set_params)
 				flash[:notice] = "Editted comment success"
 				redirect_to book_path(@book, page: params[:page])
 			else
+				flash[:alert] = "Edit comment fail"
+				redirect_to book_path(@book)
+			end
+		elsif params[:commit] == "draft"
+			if @comment.update(set_params)
 				flash[:notice] = "Editted comment into draft"
 				redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:alert] = "Edit comment fail"
+				redirect_to book_path(@book)
 			end
-		else
-			flash[:alert] = "Edit comment fail"
-			redirect_to book_path(@book)
 		end
 	end
 
@@ -82,5 +94,12 @@ class BookCommentsController < ApplicationController
 
 	def set_params
 		params.require(:comment).permit(:description, :user_id, :is_public)
+	end
+
+	def security
+		if current_user != @comment.user && current_user.role != "admin"
+			flash[:alert] = "You are not allowed."
+			redirect_to books_path
+		end
 	end
 end

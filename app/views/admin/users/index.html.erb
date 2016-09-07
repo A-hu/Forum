@@ -1,0 +1,30 @@
+<h1>Users management interface</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<td>User name</td>
+			<td>Delete user</td>
+			<td>Email</td>
+			<td>Introduction</td>
+			<td>Introduction editting</td>
+			<td>Regiestered time</td>
+			<td>Admin</td>
+			<td>Change to Admin</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+		<% @users.each do |user|%>
+			<td><%= user.short_name%></td>
+			<td><%= link_to "delete", admin_user_path(user), method: :delete, data: {confirm: "You are killing THIS user!"}%></td>
+			<td><%= user.email%></td>
+			<td><%= user.introduction%></td>
+			<td><%= link_to "edit", edit_admin_user_path(user)%></td>
+			<td><%= user.created_at.strftime("%F %H:%M")%></td>
+			<td><%= user.role%></td>
+			<td><%= link_to "Change to admin", admin_users_path(commit: "admin", pass: user.id) %></td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>

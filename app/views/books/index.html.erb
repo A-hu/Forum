@@ -2,9 +2,9 @@
 
 
 <%= form_tag books_path, :method => :get do%>
-	<%= submit_tag "Comedy"%>
-	<%= submit_tag "Tragedy"%>
-	<%= submit_tag "NObody"%>
+	<% Group.all.each do |g|%>
+		<%= submit_tag g.name%>
+	<%end%>
 	<%= submit_tag "All"%>
 <%end%>
 

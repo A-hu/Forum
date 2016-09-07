@@ -1,5 +1,11 @@
 <h3>Book name: <%= @book.name%></h3>
-<div class="collect"><%=button_to "collection", collection_book_path(@book), remote: true%></div>
+<div class="collect">
+	<%if !current_user.collected_books.exists?(@book)%>
+		<%=button_to "collection", collection_book_path(@book), remote: true%>
+	<%else%>
+		<h3 style="color:blue">Book collected</h3>
+	<%end%>
+</div>
 
 <h3>Book description: <%= @book.description%></h3>
 <h3>Aurthor name: <%= @book.user.short_name%></h3>
