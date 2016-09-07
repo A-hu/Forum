@@ -27,20 +27,19 @@ class BookCommentsController < ApplicationController
 		@comment = @book.comments.new(set_params)
 		@comment.user = current_user
 		@book.comment_number += 1
-		if @comment.save && @book.save
-			if params[:commit] == "draft"
-				flash[:notice] = "Add comment into draft"
-				@comment.update(is_public: false)
+		if @book.save && @comment.save
+			if params[:commit] == "Create Comment"
+				@comment.update(is_public: true) 
+				flash[:notice] = "Add comment success"	
+				redirect_to book_path(@book)
 			else
-				flash[:notice] = "Add comment success"
-				@comment.update(is_public: true)
-			end				
-			
-			redirect_to book_path(@book, page: params[:page])
+				flash[:notice] = "Add comment into draft"	
+				redirect_to book_path(@book)	
+			end
 		else
 			flash[:alert] = "Add comment fail"
-			render 'index'
-		end
+			redirect_to book_path(@book)
+		end	
 	end
 
 	# def edit
@@ -48,18 +47,17 @@ class BookCommentsController < ApplicationController
 
 	def update
 		if @comment.update(set_params)
-			if params[:commit] == "draft"
-				flash[:notice] = "Editted comment into draft"
-				@comment.update(is_public: false)
-			else
+			if params[:commit] == "Update Comment"
+				@comment.update(is_public: true) 
 				flash[:notice] = "Editted comment success"
-				@comment.update(is_public: true)
-			end	
-
-			redirect_to book_path(@book, page: params[:page])
+				redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:notice] = "Editted comment into draft"
+				redirect_to book_path(@book, page: params[:page])
+			end
 		else
 			flash[:alert] = "Edit comment fail"
-			render 'index'
+			redirect_to book_path(@book)
 		end
 	end
 
@@ -79,7 +77,7 @@ class BookCommentsController < ApplicationController
 	end
 
 	def set_before
-		@comment = @book.comments.find(params[:id])
+		@comment = Comment.find(params[:id])
 	end
 
 	def set_params

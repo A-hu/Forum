@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905101829) do
+ActiveRecord::Schema.define(version: 20160907062124) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 20160905101829) do
   create_table "books", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.boolean  "is_public"
+    t.boolean  "is_public",      default: false
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "category_id"
     t.integer  "comment_number"
     t.integer  "views"
@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(version: 20160905101829) do
   create_table "comments", force: :cascade do |t|
     t.string   "name"
     t.integer  "book_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "description"
     t.integer  "user_id"
-    t.boolean  "is_public"
+    t.boolean  "is_public",   default: false
     t.index ["book_id"], name: "index_comments_on_book_id"
   end
 
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160905101829) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "introduction"
+    t.string   "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

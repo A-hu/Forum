@@ -1,0 +1,23 @@
+<h1>Group class</h1>
+<%= form_for @group, url: admin_groups_path do |g|%>
+	<%= g.text_field :name%>
+	<%= g.submit%>
+<%end%>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<td>Groups</td>
+			<td>Edit</td>
+			<td>Delete</td>
+		</tr>
+	</thead>
+		<tr>
+		<%@groups.each do |group|%>
+			<td><%= group.name%></td>
+			<td><%= link_to "Edit name", admin_groups_path(gid: group.id )%></td>
+			<td><%= link_to "Delete", admin_group_path(group), method: :delete, data: {confirm: "Please check this group is not to use."}%></td>
+		</tr>
+		<%end%>
+
+</table>

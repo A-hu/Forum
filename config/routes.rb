@@ -14,10 +14,13 @@ Rails.application.routes.draw do
     end
   end
 
+
+
   resources :users 
 
   namespace :admin do
     resources :books
+    resources :groups
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

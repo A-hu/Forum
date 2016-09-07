@@ -1,5 +1,5 @@
 
-<%= link_to "About", about_books_path%>
+
 
 <%= form_tag books_path, :method => :get do%>
 	<%= submit_tag "Comedy"%>
@@ -8,17 +8,17 @@
 	<%= submit_tag "All"%>
 <%end%>
 
-<%= link_to 'Sort by default', books_path(:order => 'ids', :commit => params[:commit])%>
+<%= link_to 'Sort by default', books_path(:order => 'id', :commit => params[:commit])%>
 
 <table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Book name</th>
 			<th>Author</th>
-			<th><%= link_to "Comment number", books_path(:order => 'comments', :commit => params[:commit])%></th>
+			<th><%= link_to "Comment number", books_path(:order => 'comment_number', :commit => params[:commit])%></th>
 			<th>Comments from</th>
 			<th><%= link_to "Views", books_path(:order => 'views', :commit => params[:commit])%></th>
-			<th><%= link_to "Update time", books_path(:order => 'update_time', :commit => params[:commit])%></th>
+			<th><%= link_to "Update time", books_path(:order => 'updated_at', :commit => params[:commit])%></th>
 			<%if current_user%>
 				<th>Edit</th>
 				<th>Delete</th>
@@ -38,7 +38,7 @@
 			</td>
 			<td><%= book.views%></td>
 			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
-			<%if current_user && current_user == book.user%>
+			<%if current_user && current_user == book.user || current_user.try(:role) == "admin"%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
 				<td><%= link_to "Delete", book_path(book, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>
 			<%end%>

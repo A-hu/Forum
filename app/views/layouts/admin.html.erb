@@ -18,6 +18,8 @@
         	<p style="color: green"><%= flash[:notice] %></p>
           <p style="color: red"><%= flash[:alert] %></p>
           <%= yield %>
+          <%= link_to "Editing groups for books ", admin_groups_path%>
+          <br>
           <%= link_to "Back to bookstore", books_path(page: params[:page])%>
         </div>
       </div>

@@ -12,6 +12,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <%= link_to "About us", about_books_path%>
+          <br>
           <% if current_user%>
               <h3> <%= link_to current_user.try(:short_name), user_path(current_user)%>, you are in AC bookstore.</h3>
             <%end%>
@@ -28,7 +30,11 @@
     		  
           <%= yield %>
           <%= link_to "Back to bookstore", books_path(page: params[:page])%>
-          <%= link_to 'admin', admin_books_path%>
+          
+          <%if current_user.present? && current_user.role == "admin"%>
+          
+            <%= link_to 'admin', admin_books_path%>
+          <%end%>  
         </div>
       </div>
     </div>

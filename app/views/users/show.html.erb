@@ -6,9 +6,8 @@
 			<th>Public Books</th>
 		</tr>
 	</thead>
-	<tbody>
-		
-			<% @user.owner_books.each do |b| %>
+	<tbody>		
+			<% @publicbooks.each do |b| %>
 			<tr>
 				<td><%= b.name%></td>
 			</tr>
@@ -26,7 +25,7 @@
 	<tbody>
 			<% @user.collected_books.each do |b| %>
 			<tr>
-				<td><%= Book.find(b).name%></td>
+				<td class=book_<%= b.id%>><%= Book.find(b).name%></td>
 			</tr>
 			<%end%>
 	</tbody>
@@ -41,7 +40,7 @@
 		</tr>
 	</thead>
 	<tbody>		
-			<% @user.comments.each do |b| %>
+			<% @publiccomments.each do |b| %>
 			<tr>
 				<td><%= b.book.name%></td>
 				<td><%= b.description%></td>
@@ -58,7 +57,7 @@
 			</tr>
 		</thead>
 		<tbody>		
-				<% @books.each do |b| %>
+				<% @draftbooks.each do |b| %>
 				<tr>
 					<td><%= b.name%></td>
 					<td><%= link_to "Edit", edit_book_path(b)%></td>
@@ -76,7 +75,7 @@
 			</tr>
 		</thead>
 		<tbody>		
-				<% @comments.each do |c| %>
+				<% @draftcomments.each do |c| %>
 				<tr>
 					<td><%= c.book.name%></td>
 					<td><%= c.description%></td>
