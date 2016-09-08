@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'omniauth-facebook'
+gem 'omniauth-line'
 gem 'time_zone_ext'
 gem 'strftime-rails', '~> 0.9.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -7,7 +7,12 @@
 	<%end%>
 </div>
 <div class="like">
-	<%= render partial: 'like'%>
+	<!--<%= render partial: 'like'%>-->
+	<% if current_user.liked_book?(@book)%>
+		<%= button_to "Like", like_book_path(@book), remote: true%>
+	<% else %>
+		<%= button_to "Unlike", like_book_path(@book), remote: true%>
+	<%end%>
 </div>
 
 <h3>Book description: <%= @book.description%></h3>
