@@ -6,6 +6,9 @@
 		<h3 style="color:blue">Book collected</h3>
 	<%end%>
 </div>
+<div class="like">
+	<%= render partial: 'like'%>
+</div>
 
 <h3>Book description: <%= @book.description%></h3>
 <h3>Aurthor name: <%= @book.user.short_name%></h3>

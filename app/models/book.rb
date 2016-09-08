@@ -5,12 +5,14 @@ class Book < ApplicationRecord
 	belongs_to :category, optional: true
 
 	has_many :comments, :dependent => :destroy
-	has_many :book_groupships
+	has_many :book_groupships, :dependent => :destroy
 	has_many :groups, through: :book_groupships
 
 	has_many :user_bookships
 	has_many :users, through: :user_bookships
 
+	has_many :likes, :dependent => :destroy
+	has_many :likers, :through => :likes, :source => :user
 	def user_uniq
 		list=[]
 		self.comments.each do |comment|

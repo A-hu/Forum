@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :set_before, only: [:show, :edit, :update, :collection, :destroy]
+	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :destroy]
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
@@ -129,6 +129,21 @@ class BooksController < ApplicationController
 			flash[:alert] = "This book is already collected."
 		end
 
+	end
+
+	def like
+		if current_user.liked_book?(@book)
+			current_user.liked_books.delete(@book)
+		else
+			current_user.liked_books << @book
+		end
+
+		respond_to do |format|
+		format.html {redirect_to book_path(@book)}
+		format.js
+		end
+
+		
 	end
 
 	def destroy

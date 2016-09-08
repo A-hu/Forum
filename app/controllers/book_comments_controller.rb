@@ -24,7 +24,8 @@ class BookCommentsController < ApplicationController
 	# end
 
 	def create
-		@comment = @book.comments.new(set_params)
+		@comment = Comment.new(set_params)
+		@comment.update(book_id: params[:book_id])
 		@comment.user = current_user
 		@book.comment_number += 1
 		@book.save

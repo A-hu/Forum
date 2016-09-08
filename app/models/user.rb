@@ -10,9 +10,15 @@ class User < ApplicationRecord
   has_many :user_bookships
   has_many :collected_books, through: :user_bookships, :source => :book
 
+
+  has_many :likes, :dependent => :destroy
+  has_many :liked_books, through: :likes, :source => :book
+  
   def short_name
   	self.email.split("@").first
   end
 
-
+  def liked_book?(book)
+    self.liked_books.include?(book)
+  end
 end

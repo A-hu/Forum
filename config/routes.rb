@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   	resources :comments, controller: 'book_comments'
 	
   	collection do
-	  get :about
+  	  get :about
   	  post :bulk_selectgroup
   	end
 
     member do
       post :collection
+      post :like
     end
   end
 
