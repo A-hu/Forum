@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :destroy]
+	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :subscribe, :destroy]
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
@@ -150,7 +150,17 @@ class BooksController < ApplicationController
 	end
 
 	def subscribe
-		
+		if current_user.subscribed_books.exists?(@book)
+			current_user.subscribed_books.delete(@book)
+		else
+			current_user.subscribed_books << @book
+		end
+
+
+		respond_to do |format|
+		format.html {redirect_to books_path}
+		format.js
+		end
 	end
 
 	def destroy

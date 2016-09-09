@@ -14,6 +14,9 @@ class Book < ApplicationRecord
 	has_many :likes, :dependent => :destroy
 	has_many :likers, :through => :likes, :source => :user
 
+	has_many :subscribes, dependent: :destroy
+	has_many :subscribers, through: :subscribes, source: :user
+
 	has_attached_file :logo, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
 	

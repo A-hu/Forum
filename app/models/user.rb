@@ -14,6 +14,9 @@ class User < ApplicationRecord
 
   has_many :likes, :dependent => :destroy
   has_many :liked_books, through: :likes, :source => :book
+
+  has_many :subscribes, dependent: :destroy
+  has_many :subscribed_books, through: :subscribes, source: :book
   
   def short_name
   	self.email.split("@").first
