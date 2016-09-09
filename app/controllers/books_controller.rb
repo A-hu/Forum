@@ -31,8 +31,11 @@ class BooksController < ApplicationController
 			# elsif params[:order] == "views"
 			# 	sort_by = 'views DESC'
 			# end
-		@books = @books.order("#{params[:order]} DESC")	if params[:order].present?
-		# end
+		if params[:order].present?
+			@books = @books.order("#{params[:order]} DESC")	
+		else
+			@books = @books.order("id DESC")
+		end
 
 
 		@books = @books.page( params[:page] ).per(10)
@@ -93,6 +96,9 @@ class BooksController < ApplicationController
 
 	def update
 			
+		if params[:remove_img] == "1"
+			@book.logo = nil
+		end
 		if params[:commit] == "Update Book"
 			@book.update(is_public: true) 
 			if @book.update(set_params)
@@ -111,7 +117,6 @@ class BooksController < ApplicationController
 				render 'edit'
 			end
 		end
-		
 	end
 
 	def collection
@@ -142,20 +147,26 @@ class BooksController < ApplicationController
 		format.html {redirect_to book_path(@book)}
 		format.js
 		end
+	end
 
+	def subscribe
 		
 	end
 
 	def destroy
 		@book.destroy
-		flash[:alert] = "Delete success"
-		redirect_to books_path(page: params[:page])
+		
+		respond_to do |format|
+			format.html {redirect_to books_path(page: params[:page])}
+			format.js
+		end
+		
 	end
 
 	private
 
 	def set_params
-		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id, :is_public,
+		params.require(:book).permit(:name,:description, :user_id, :comment_number, :category_id, :is_public, :logo,
 									 group_ids: [], book_ids: [])
 	end
 

@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+//LIYI destroy ajax
+// $(document).on('turbolinks:load', function() {
+// 	$(".delete").click(function(e){
+// 		e.preventDefault();
+// 		$(this).closest("tr").css({"color": "red", "border": "2px solid red"});
+// 	});
+// });

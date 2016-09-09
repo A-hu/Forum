@@ -15,22 +15,43 @@
 	</tbody>
 
 </table>
-
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Collection</th>
-		</tr>
-	</thead>
-	<tbody>
-			<% @user.collected_books.each do |b| %>
+<div class="container col-md-6">
+	<table class="table table-striped">
+		<thead>
 			<tr>
-				<td class=book_<%= b.id%>><%= Book.find(b).name%></td>
+				<th>Collection</th>
 			</tr>
-			<%end%>
-	</tbody>
+		</thead>
+		<tbody>
+				<% @user.collected_books.each do |b| %>
+				<tr>
+					<td>
+						<%= Book.find(b).name%>
+					</td>
+				<%end%>
+				</tr>
+		</tbody>
 
-</table>
+	</table>
+</div>
+<div class="container col-md-6">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Like</th>
+			</tr>
+		</thead>
+		<tbody>
+				<% @user.liked_books.each do |b|%>
+				<tr>
+					<td>
+						<%= Book.find(b).name%>
+					</td>
+				<%end%>
+				</tr>
+		</tbody>
+	</table>
+</div>
 
 <table class="table table-striped">
 	<thead>

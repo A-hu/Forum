@@ -1,5 +1,15 @@
 	<% if current_user.liked_book?(@book)%>
-		<%= button_to "Like", like_book_path(@book), remote: true%>
-	<% else %>
 		<%= button_to "Unlike", like_book_path(@book), remote: true%>
+		<h2><%= @book.likers.count%> Likes</h2>
+		<h4>who like this book?</h4>
+		<% @book.likers.each do |l|%>
+			<p><%= l.short_name%></p>
+		<%end%>
+	<% else %>
+		<%= button_to "Like", like_book_path(@book), remote: true%>
+		<h2><%= @book.likers.count%> Likes</h2>
+		<h4>who like this book?</h4>
+		<% @book.likers.each do |l|%>
+			<p><%= l.short_name%></p>
+		<%end%>
 	<%end%>

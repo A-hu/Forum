@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+
+gem "paperclip"
 gem 'omniauth-facebook'
 gem 'omniauth-line'
 gem 'time_zone_ext'

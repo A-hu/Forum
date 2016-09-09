@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     member do
       post :collection
       post :like
+      post :subscribe
     end
   end
 

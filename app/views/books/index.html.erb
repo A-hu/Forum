@@ -13,6 +13,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
+			<th>Logo</th>
 			<th>Book name</th>
 			<th>Author</th>
 			<th><%= link_to "Comment number", books_path(:order => 'comment_number', :commit => params[:commit])%></th>
@@ -26,8 +27,13 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
 		<% @books.each do |book|%>
-		<tr>			
+			<%if book.logo.exists?%>
+				<td><%= image_tag(book.logo.url(:thumb) )%></td>
+			<%else%>
+				<td>None</td>
+			<%end%>
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
 			<td><%= link_to book.user.short_name, user_path(book.user)%></td>
 			<td><%= book.comment_number%></td>
@@ -40,7 +46,7 @@
 			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
 			<%if current_user && current_user == book.user || current_user.try(:role) == "admin"%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
-				<td><%= link_to "Delete", book_path(book, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>
+				<td><button class="delete"><%= link_to "Delete", book_path(book, page: params[:page]), method: :delete, remote: true%></button></td>
 			<%end%>
 		</tr>
 		<%end%>

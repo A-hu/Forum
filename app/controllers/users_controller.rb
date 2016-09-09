@@ -13,13 +13,6 @@ class UsersController < ApplicationController
 		@draftcomments = @user.comments.where(is_public: false)
 	end
 
-	def new
-		@user = User.new
-	end
-
-	def create
-		@user = User.new(set_params)
-	end
 
 	def edit
 	end

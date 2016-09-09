@@ -1,8 +1,29 @@
-
+<div class="form-group">
 	<%= b.label :name%>
 	<%= b.text_field :name%>
+</div>
+<div class="form-group">
+	<%= b.file_field :logo%>
+	<%if @book.logo.exists?%>
+		<%= b.label "Remove photo"%>
+		<%= check_box_tag "remove_img", "1"%>
+	<%end%>
+</div>
+<div class="form-group">
 	<%= b.label :description%>
 	<%= b.text_area :description%>
+</div>
+<div class="form-group">
 	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
+</div>
+<div class="form-group">
 	<%= b.submit "draft"%>
 	<%= b.submit%>
+</div>
+
+	
+
+	
+
+	
+	

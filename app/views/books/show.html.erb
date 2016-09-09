@@ -1,23 +1,28 @@
 <h3>Book name: <%= @book.name%></h3>
-<div class="collect">
-	<%if !current_user.collected_books.exists?(@book)%>
-		<%=button_to "collection", collection_book_path(@book), remote: true%>
-	<%else%>
-		<h3 style="color:blue">Book collected</h3>
-	<%end%>
-</div>
-<div class="like">
-	<!--<%= render partial: 'like'%>-->
-	<% if current_user.liked_book?(@book)%>
-		<%= button_to "Like", like_book_path(@book), remote: true%>
-	<% else %>
-		<%= button_to "Unlike", like_book_path(@book), remote: true%>
-	<%end%>
-</div>
+
+<%if current_user%>
+	<div class="collect">
+			<%if !current_user.collected_books.exists?(@book)%>
+				<%=button_to "collection", collection_book_path(@book), remote: true%>
+			<%else%>
+				<h3 style="color:blue">Book collected</h3>
+			<%end%>
+	</div>
+	<div class="like">
+		<%= render partial: 'like', locols: {book: @book}%>
+		<!--<% if current_user.liked_book?(@book)%>
+			<%= button_to "Unlike", like_book_path(@book), remote: true%>
+		<% else %>
+			<%= button_to "Like", like_book_path(@book), remote: true%>
+		<%end%>-->
+	</div>
+<%end%>
+
 
 <h3>Book description: <%= @book.description%></h3>
 <h3>Aurthor name: <%= @book.user.short_name%></h3>
 <h3>Group name: </h3>
+<h3>Photo: <%= image_tag(@book.logo.url(:medium))%></h3>
 <% @book.groups.each do |bg|%>
 	<h3><%= bg.name%></h3>
 <%end%>

@@ -1,8 +1,8 @@
-	<% if current_user.liked_book?(@book)%>
-		$(".like input[type=submit]").val("Unlike")
-	<% else %>
-		$(".like input[type=submit]").val("Like")
-	<%end%>
-	console.log("hello")
+	// <% if current_user.liked_book?(@book)%>
+	// 	$(".like input[type=submit]").val("Unlike")
+	// <% else %>
+	// 	$(".like input[type=submit]").val("Like")
+	// <%end%>
+	// console.log("hello")
 
-// $(".like").html("<%= j render partial:'like'%>")
+$(".like").html("<%= j render partial:'like'%>")
