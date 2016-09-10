@@ -3,6 +3,11 @@
 	<%= form_for [@book, @comment] do |c|%>
 		<%= c.label :description, "Comment"%>
 		<%= c.text_area :description%>
+		<%= c.file_field :logo%>
+		<%if @book.logo.exists?%>
+			<%= c.label "Remove photo"%>
+			<%= check_box_tag "remove_img", "1"%>
+		<%end%>
 		<%= hidden_field_tag :page, params[:page] %>
 		<%= c.submit%>
 	<%end%>

@@ -57,7 +57,11 @@ class BookCommentsController < ApplicationController
 	# def edit
 	# end
 
-	def update		
+	def update	
+		if params[:remove_img] == "1"
+			@comment.logo = nil
+		end	
+
 		if params[:commit] == "Update Comment"
 			@comment.update(is_public: true) 
 			if @comment.update(set_params)
@@ -82,8 +86,12 @@ class BookCommentsController < ApplicationController
 		@book.comment_number -= 1
 		@book.save
 		@comment.destroy
-		flash[:alert] = "Delete success"
-		redirect_to book_path(@book)
+
+		respond_to do |format|
+			format.html {redirect_to book_path(@book)}
+			format.js
+		end
+		
 	end
 
 
@@ -98,7 +106,7 @@ class BookCommentsController < ApplicationController
 	end
 
 	def set_params
-		params.require(:comment).permit(:description, :user_id, :is_public)
+		params.require(:comment).permit(:description, :user_id, :is_public, :logo)
 	end
 
 	def security

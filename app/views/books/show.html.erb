@@ -31,6 +31,11 @@
 <h3>There are some comments for <%= @book.name%> below:</h3>
 <%if current_user%>
 	<%= form_for [@book, @comment], remote: true do |c|%>
+		<%= c.file_field :logo%>
+		<%if @comment.logo.exists?%>
+			<%= c.label "Remove photo"%>
+			<%= check_box_tag "remove_img", "1"%>
+		<%end%>
 		<%= c.label :description, "Comment"%>
 		<%= c.text_area :description%>
 		<%= hidden_field_tag :page, params[:page] %>
@@ -42,6 +47,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
+			<th>Photo</th>
 			<th>Name</th>
 			<th>Comment</th>
 			<%if current_user%>
@@ -52,12 +58,18 @@
 	</thead>
 	<tbody class="comment">
 		<% @comments.each do |c|%>
-		<tr>			
+		<tr>	
+			<%if c.logo.exists?%>
+				<td><%= image_tag(c.logo.url(:thumb) )%></td>
+			<%else%>
+				<td>None</td>
+			<%end%>		
 			<td><%= c.user.short_name%></td>
 			<td><%= c.description%></td>
 			<%if current_user && current_user == c.user%>
 				<td><%= link_to "Edit", book_path(@book, eid: c.id)%></td>
-				<td><%= link_to "Delete", book_comment_path(@book, c, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>
+				<td><button class="delete"><%= link_to "Delete", book_comment_path(@book, c, page: params[:page]), method: :delete, remote: true%></button></td>
+				<!-- data: {confirm: "Are you sure?!!"}, -->
 			<%end%>
 		</tr>
 		<%end%>

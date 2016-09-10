@@ -1,12 +1,22 @@
-$(".new_comment").on('ajax:success', function() {
+$(".new_comment").on('ajax:success', function(e) {
+										 
 								        var tr = $("<tr></tr>");
+								        <%if @comment.logo.exists?%>
+								        	tr.append('<td><%= image_tag(@comment.logo.url(:thumb) )%></td>');
+							        	<%else%>
+								        	tr.append('<td>None</td>');
+										<%end%>
 							        	tr.append('<td><%= @comment.user.short_name %></td>');
 							        	tr.append('<td><%= @comment.description %></td>');
 							        	tr.append('<td><%= link_to "Edit", book_path(@book, eid: @comment.id)%></td>');
-							        	tr.append('<td><%= link_to "Delete", book_comment_path(@book, @comment, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>');
+							        	tr.append('<td><button class="delete"><%= link_to "Delete", book_comment_path(@book, @comment, page: params[:page]), method: :delete, remote: true%></button></td>');
 							        	$('.comment').append(tr);
 								        $("textarea").val('');
-									});  
+								        e.preventDefault()
+									}); 
+
+// , data: {confirm: "Are you sure?!!"}
+
 	  // from taker
       // var li = $('<li></li>');
       // li.append('<input type="checkbox">');

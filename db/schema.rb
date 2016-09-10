@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909114126) do
+ActiveRecord::Schema.define(version: 20160910094537) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -48,11 +48,15 @@ ActiveRecord::Schema.define(version: 20160909114126) do
   create_table "comments", force: :cascade do |t|
     t.string   "name"
     t.integer  "book_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "description"
     t.integer  "user_id"
-    t.boolean  "is_public",   default: false
+    t.boolean  "is_public",         default: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
     t.index ["book_id"], name: "index_comments_on_book_id"
   end
 
