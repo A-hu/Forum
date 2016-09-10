@@ -1,5 +1,12 @@
-	<%if current_user.subscribed_books.exists?(@book)%>
-		$(".subs input[type=submit]").val("Unsubscribe")
+	<%if current_user.subscribed_books.exists?(@book.id)%>
+		$(".subs a").on('ajax:success', function(e) {
+		e.preventDefault();
+        $(this).html("Unsubscribe")
+});	  
 	<%else%>
-		$(".subs input[type=submit]").val("Subscribe")
+		$(".subs a").on('ajax:success', function(e) { 
+		e.preventDefault();
+        $(this).html("Subscribe")
+});
 	<%end%>
+	console.log("hihi")

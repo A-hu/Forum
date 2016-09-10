@@ -30,7 +30,7 @@
 
 <h3>There are some comments for <%= @book.name%> below:</h3>
 <%if current_user%>
-	<%= form_for [@book, @comment] do |c|%>
+	<%= form_for [@book, @comment], remote: true do |c|%>
 		<%= c.label :description, "Comment"%>
 		<%= c.text_area :description%>
 		<%= hidden_field_tag :page, params[:page] %>
@@ -50,8 +50,7 @@
 			<%end%>
 		</tr>
 	</thead>
-	<tbody>
-
+	<tbody class="comment">
 		<% @comments.each do |c|%>
 		<tr>			
 			<td><%= c.user.short_name%></td>

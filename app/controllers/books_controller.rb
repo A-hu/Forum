@@ -150,7 +150,7 @@ class BooksController < ApplicationController
 	end
 
 	def subscribe
-		if current_user.subscribed_books.exists?(@book)
+		if current_user.subscribed_books.exists?(@book.id)
 			current_user.subscribed_books.delete(@book)
 		else
 			current_user.subscribed_books << @book

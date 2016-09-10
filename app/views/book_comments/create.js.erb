@@ -1,0 +1,19 @@
+$(".new_comment").on('ajax:success', function() {
+								        var tr = $("<tr></tr>");
+							        	tr.append('<td><%= @comment.user.short_name %></td>');
+							        	tr.append('<td><%= @comment.description %></td>');
+							        	tr.append('<td><%= link_to "Edit", book_path(@book, eid: @comment.id)%></td>');
+							        	tr.append('<td><%= link_to "Delete", book_comment_path(@book, @comment, page: params[:page]), method: :delete, data: {confirm: "Are you sure?!!"}%></td>');
+							        	$('.comment').append(tr);
+								        $("textarea").val('');
+									});  
+	  // from taker
+      // var li = $('<li></li>');
+      // li.append('<input type="checkbox">');
+      // li.append('<span class="content"></span>');
+      // li.append('<button class="delete">x</button>');
+      // li.find('.content').html(todo);
+      // $('#todo-list').append(li);
+      
+      // // empty input
+      // $('input').val('');

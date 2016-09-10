@@ -33,8 +33,7 @@ class BookCommentsController < ApplicationController
 		if params[:commit] == "Create Comment"
 			@comment.update(is_public: true) 
 			if @comment.save
-				flash[:notice] = "Add comment success"	
-				redirect_to book_path(@book)
+				flash[:notice] = "Add comment success"
 			else
 				flash[:alert] = "Add comment fail"
 				redirect_to book_path(@book)
@@ -48,6 +47,11 @@ class BookCommentsController < ApplicationController
 				redirect_to book_path(@book)
 			end
 		end	
+
+		respond_to do |format|
+			format.html {redirect_to book_path(@book)}
+			format.js
+		end
 	end
 
 	# def edit

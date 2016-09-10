@@ -1,5 +1,5 @@
 // $(".delete").closest("tr").css({"color": "red", "border": "2px solid red"});
-$('.delete').bind('ajax:success', function() {  
+$('.delete').on('ajax:success', function() {  
         $(this).closest('tr').fadeOut();
 });  
 

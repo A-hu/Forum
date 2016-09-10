@@ -16,6 +16,8 @@
 //= require_tree .
 
 
+// Turbolinks.enableProgressBar();
+
 //LIYI destroy ajax
 // $(document).on('turbolinks:load', function() {
 // 	$(".delete").click(function(e){

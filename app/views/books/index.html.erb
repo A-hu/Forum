@@ -45,10 +45,10 @@
 			</td>
 			<td><%= book.views%></td>
 			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
-			<%if current_user.subscribed_books.exists?(book)%>
-				<td class="subs"><%= button_to "Unsubscribe", subscribe_book_path(book), remote: true%></td>
+			<%if current_user.subscribed_books.exists?(book.id)%>
+				<td><button class="subs"><%= link_to "Unsubscribe",subscribe_book_path(book), method: :post,remote: true%></button></td>
 			<%else%>
-				<td class="subs"><%= button_to "Subscribe", subscribe_book_path(book), remote: true%></td>
+				<td><button class="subs"><%= link_to "Subscribe", subscribe_book_path(book), method: :post,remote: true%></button></td>
 			<%end%>
 			<%if current_user && current_user == book.user || current_user.try(:role) == "admin"%>
 				<td><%= link_to "Edit", edit_book_path(book, page: params[:page])%></td>
