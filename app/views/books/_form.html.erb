@@ -22,6 +22,9 @@
  	<%= b.text_field :tag_list %>
 </div>
 <div class="form-group">
+	<%= b.select :tag_list, Tag.all.map{ |x| [x.name, x.id] }, {}, :multiple => true %>
+</div>
+<div class="form-group">
 	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
 </div>
 <div class="form-group">
@@ -33,7 +36,12 @@
 
 <script>
    $("#book_onshelf_day").datepicker({
-     format: "yyyy/mm/dd"
+     format: "yyyy-mm-dd"
+   });
+
+   $("#book_tag_list").select2({
+     tags: <%= raw( Tag.all.map{ |x| x.name }.to_json ) %>,
+     tokenSeparators: [',', ' ']
    });
 </script>
 	
