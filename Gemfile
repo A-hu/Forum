@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+
+gem 'gon'
 gem "select2-rails"
 gem 'bootstrap-datepicker-rails'
 gem "paperclip"

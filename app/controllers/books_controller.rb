@@ -5,13 +5,16 @@ class BooksController < ApplicationController
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
-			# if params[:commit] == "Comedy"
+			
+		gon.tags = Tag.all.map{ |x| x.name }
+
 		if params[:commit].present? && params[:commit] != "All"
 			@books = Group.find_by_name(params[:commit]).books 
 		else
 			@books = Book.all
 		end
-				# @books = @books.where('groups.id' => 1)
+			# if params[:commit] == "Comedy"
+			#   @books = @books.where('groups.id' => 1)
 			# elsif params[:commit] == "Tragedy"
 			# 	@books = @books.where('groups.id' => 2)
 			# elsif params[:commit] == "NObody"
