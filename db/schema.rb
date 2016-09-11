@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910154833) do
+ActiveRecord::Schema.define(version: 20160911022353) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20160910154833) do
     t.string   "description"
     t.boolean  "is_public",         default: false
     t.integer  "user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "category_id"
     t.integer  "comment_number"
     t.integer  "views"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160910154833) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.date     "onshelf_day",       default: '2016-09-11'
     t.index ["category_id"], name: "index_books_on_category_id"
     t.index ["user_id"], name: "index_books_on_user_id"
   end
@@ -125,8 +126,6 @@ ActiveRecord::Schema.define(version: 20160910154833) do
     t.datetime "updated_at",                          null: false
     t.string   "introduction"
     t.string   "role"
-    t.string   "provider"
-    t.string   "uid"
     t.string   "fb_uid"
     t.string   "fb_token"
     t.index ["email"], name: "index_users_on_email", unique: true

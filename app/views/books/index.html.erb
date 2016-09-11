@@ -15,6 +15,7 @@
 		<tr>
 			<th>Logo</th>
 			<th>Book name</th>
+			<th>On shelf</th>
 			<th>Author</th>
 			<th><%= link_to "Comment number", books_path(:order => 'comment_number', :commit => params[:commit])%></th>
 			<th>Comments from</th>
@@ -36,6 +37,7 @@
 				<td>None</td>
 			<%end%>
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
+			<td><%= book.onshelf_day%></td>
 			<td><%= link_to book.user.short_name, user_path(book.user)%></td>
 			<td><%= book.comment_number%></td>
 			<td>

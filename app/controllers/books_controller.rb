@@ -177,7 +177,7 @@ class BooksController < ApplicationController
 
 	def set_params
 		params.require(:book).permit(:name, :description, :user_id, :comment_number, :category_id, :is_public, :logo, 
-									 :tag_list, group_ids: [], book_ids: [])
+									 :onshelf_day, :tag_list, group_ids: [], book_ids: [])
 	end
 
 	def set_before

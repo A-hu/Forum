@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'bootstrap-datepicker-rails'
 gem "paperclip"
 gem 'omniauth-facebook'
 gem 'omniauth-line'

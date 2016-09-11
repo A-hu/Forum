@@ -20,6 +20,7 @@
 
 
 <h3>Book description: <%= @book.description%></h3>
+<h3>Book On_shelf day: <%= @book.onshelf_day%></h3>
 <h3>Aurthor name: <%= @book.user.short_name%></h3>
 <h3>Group name: </h3>
 <h3>Photo: <%= image_tag(@book.logo.url(:medium))%></h3>

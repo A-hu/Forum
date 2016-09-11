@@ -13,6 +13,10 @@
 	<%= b.label :description%>
 	<%= b.text_area :description%>
 </div>
+ <div class="form-group">
+    <%= b.label :onshelf_day, "On shelf" %>
+    <%= b.text_field :onshelf_day%>
+</div>
 <div class="form-group">
 	<%= b.label :tag_list %>
  	<%= b.text_field :tag_list %>
@@ -25,6 +29,13 @@
 	<%= b.submit%>
 </div>
 
+
+
+<script>
+   $("#book_onshelf_day").datepicker({
+     format: "yyyy/mm/dd"
+   });
+</script>
 	
 
 	
