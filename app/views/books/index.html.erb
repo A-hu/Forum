@@ -38,7 +38,7 @@
 			<%end%>
 			<td><%= link_to book.name, book_path(book, page: params[:page])%></td>
 			<td><%= book.onshelf_day%></td>
-			<td><%= link_to book.user.short_name, user_path(book.user)%></td>
+			<td><%= link_to book.user.short_name, book_path(book.user)%></td>
 			<td><%= book.comment_number%></td>
 			<td>
 				<% book.user_uniq.each do |u| %>

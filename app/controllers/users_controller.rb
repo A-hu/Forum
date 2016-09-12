@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	
-	before_action :set_before, except: [:index, :new, :create]
+	before_action :set_before, except: [:show, :index, :new, :create]
 
 	def index
 		

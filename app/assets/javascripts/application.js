@@ -20,7 +20,7 @@
 
 // Turbolinks.enableProgressBar();
 
-//LIYI destroy ajax
+// LIYI destroy ajax
 // $(document).on('turbolinks:load', function() {
 // 	$(".delete").click(function(e){
 // 		e.preventDefault();

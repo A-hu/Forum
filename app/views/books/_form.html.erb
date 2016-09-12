@@ -19,10 +19,10 @@
 </div>
 <div class="form-group">
 	<%= b.label :tag_list %>
- 	<%= b.text_field :tag_list %>
+ 	<%= b.select :tag_list , options_for_select(Tag.all.map{ |x| [x.name, x.id] }) %>
 </div>
 <div class="form-group">
-	<%= b.select :tag_list, Tag.all.map{ |x| [x.name, x.id] }, {}, :multiple => true %>
+	<%= b.select :tag_ids, Tag.all.map{ |x| [x.name, x.id] }, {}, :multiple => true %>
 </div>
 <div class="form-group">
 	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
@@ -40,9 +40,11 @@
    });
 
    $("#book_tag_list").select2({
+     tags: true
      // tags: <%= raw( Tag.all.map{ |x| x.name }.to_json ) %>,
-     tags: gon.tags,
-     tokenSeparators: [',', ' ']
+     // theme: "bootstrap",
+     // tags: gon.tags,
+     // tokenSeparators: [',', ' ']
    });
 </script>
 	
