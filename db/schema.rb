@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911022353) do
+ActiveRecord::Schema.define(version: 20160916071557) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -59,6 +59,21 @@ ActiveRecord::Schema.define(version: 20160911022353) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.index ["book_id"], name: "index_comments_on_book_id"
+  end
+
+  create_table "friends", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.string   "status",     default: "pending"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
