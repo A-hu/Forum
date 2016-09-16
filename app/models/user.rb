@@ -17,6 +17,12 @@ class User < ApplicationRecord
 
   has_many :subscribes, dependent: :destroy
   has_many :subscribed_books, through: :subscribes, source: :book
+
+  has_many :friendships
+  has_many :friends, ->{ where( "friendships.status" => "confirmed") }, :through => :friendships
+
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, ->{ where( "friendships.status" => "confirmed") }, :through => :inverse_friendships, :source => "user"
   
   def short_name
   	self.email.split("@").first
@@ -56,4 +62,33 @@ class User < ApplicationRecord
      user.save!
      return user
    end
+
+  def all_friends
+    (friends + inverse_friends).uniq
+  end
+
+  def find_friendship(user)
+    friendships.where( :friend => user ).first ||
+    user.friendships.where( :friend => self ).first
+  end
+
+  def is_friend?(user)
+    all_friends.include?(user)
+  end
+
+  def pending_friendship?(user)
+    self.friendships.pending.where( :friend => user ).exists?
+  end
+
+  def inverse_pending_friendship?(user)
+    user.friendships.pending.where( :friend => self ).exists?
+  end
+
+  def ignored_friendship?(user)
+    self.friendships.ignored.where( :friend => user ).exists?
+  end
+
+  def inverse_ignored_friendship?(user)
+    user.friendships.ignored.where( :friend => self ).exists?
+  end
 end

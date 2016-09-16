@@ -20,7 +20,7 @@ RSpec.describe Book, type: :model do
   		Comment.create(description: "111", user_id: user1.id ,book_id: book.id)
 		Comment.create(description: "111", user_id: user1.id ,book_id: book.id)
 
-		expect(book.user_uniq).to eq(["aaaa"])
+		expect(book.user_uniq).to eq(["aaa"])
   		
   	end
   end

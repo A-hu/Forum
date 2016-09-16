@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916071557) do
+ActiveRecord::Schema.define(version: 20160916072315) do
 
   create_table "book_groupships", force: :cascade do |t|
     t.integer  "book_id"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160916071557) do
     t.string   "role"
     t.string   "fb_uid"
     t.string   "fb_token"
+    t.string   "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["fb_uid"], name: "index_users_on_fb_uid"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
