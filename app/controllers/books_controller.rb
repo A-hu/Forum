@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :subscribe, :destroy]
+	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :subscribe, :schedule, :schedule, :destroy]
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
@@ -21,7 +21,7 @@ class BooksController < ApplicationController
 			# 	@books = @books.where('groups.id' => 3)
 			# end
 		# end
-		@books = @books.where(is_public: true).includes(:groups)
+		@books = @books.where(is_public: true).where("onshelf_day <= ?", Time.now).includes(:groups)
 
 
 		
@@ -75,8 +75,8 @@ class BooksController < ApplicationController
 		@book.views = 0
 		
 		if params[:commit] == "Create Book" 
-			@book.update(is_public: true) 
 			if @book.save
+				@book.update(is_public: true) 
 				flash[:notice] = "Add file success"
 			    redirect_to book_path(@book, page: params[:page])
 			else
@@ -86,6 +86,15 @@ class BooksController < ApplicationController
 		elsif params[:commit] == "draft"
 			if @book.save
 				flash[:notice] = "Add file into draft"
+			    redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:alert] = "Add fail"
+				render 'edit'
+			end
+		elsif params[:commit] == "schedule"
+			if @book.save
+				@book.update(is_public: true)
+				flash[:notice] = "This file will publish on #{@book.onshelf_day}"
 			    redirect_to book_path(@book, page: params[:page])
 			else
 				flash[:alert] = "Add fail"
@@ -103,8 +112,8 @@ class BooksController < ApplicationController
 			@book.logo = nil
 		end
 		if params[:commit] == "Update Book"
-			@book.update(is_public: true) 
 			if @book.update(set_params)
+				@book.update(is_public: true) 
 				flash[:notice] = "Editted file success"
 				redirect_to book_path(@book, page: params[:page])
 			else
@@ -117,6 +126,15 @@ class BooksController < ApplicationController
 				redirect_to book_path(@book, page: params[:page])
 			else
 				flash[:alert] = "Editted fail"
+				render 'edit'
+			end
+		elsif params[:commit] == "schedule"
+			if @book.update(set_params)
+				@book.update(is_public: true)
+				flash[:notice] = "This file will publish on #{params[:onshelf_day]}"
+			    redirect_to book_path(@book, page: params[:page])
+			else
+				flash[:alert] = "Add fail"
 				render 'edit'
 			end
 		end

@@ -13,10 +13,10 @@
 	<%= b.label :description%>
 	<%= b.text_area :description%>
 </div>
- <div class="form-group">
+<!--  <div class="form-group">
     <%= b.label :onshelf_day, "On shelf" %>
     <%= b.text_field :onshelf_day%>
-</div>
+</div> -->
 <div class="form-group">
 	<%= b.label :tag_list %>
  	<%= b.select :tag_list , options_for_select(Tag.all.map{ |x| [x.name, x.id] })%>
@@ -27,7 +27,13 @@
 <div class="form-group">
 	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
 </div>
-<div class="form-group">
+<div class="form-group submit">
+	<%= b.submit "schedule"%>
+	<%= b.label :onshelf_day, "On shelf" %>
+    <%= b.text_field :onshelf_day%>
+</div>
+
+<div class="form-group submit">
 	<%= b.submit "draft"%>
 	<%= b.submit%>
 </div>
