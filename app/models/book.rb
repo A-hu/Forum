@@ -40,7 +40,7 @@ class Book < ApplicationRecord
 		  tag_name.strip!
 		  tag = Tag.find_by_name( tag_name ) || Tag.create( :name => tag_name )
 		  tag.id
-		end
+	end
 
 		self.tag_ids = ids
 	end

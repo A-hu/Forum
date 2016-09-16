@@ -27,9 +27,9 @@
 <% @book.groups.each do |bg|%>
 	<h3><%= bg.name%></h3>
 <%end%>
-<h3>Tag: <%= @book.tag_list%></h3>
-
-
+<% @book.tags.each do |tag|%>
+	<h3><%= tag.name%></h3>
+<%end%>
 
 <h3>There are some comments for <%= @book.name%> below:</h3>
 <%if current_user%>
