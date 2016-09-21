@@ -32,16 +32,15 @@ class Book < ApplicationRecord
 	end
 
 	def tag_list
-		self.tags.map{ |x| x.name }.join(",")
+		self.tags.map{ |tag| tag.name}
 	end
 
-	def tag_list=(str)
-		ids = str.split(",").map do |tag_name|
-		  tag_name.strip!
-		  tag = Tag.find_by_name( tag_name ) || Tag.create( :name => tag_name )
-		  tag.id
-	end
-
+	def tag_list=(arr)
+			ids = arr.map do |tag_name|
+			  tag_name = tag_name.strip.downcase
+			  tag = Tag.find_by_name( tag_name ) || Tag.create( :name => tag_name )
+			  tag.id
+			end
 		self.tag_ids = ids
 	end
 end

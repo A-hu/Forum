@@ -17,16 +17,16 @@
     <%= b.label :onshelf_day, "On shelf" %>
     <%= b.text_field :onshelf_day%>
 </div> -->
-<div class="form-group">
+<div class="form-group col-xs-3">
 	<%= b.label :tag_list %>
- 	<%= b.select :tag_list , options_for_select(Tag.all.map{ |x| [x.name, x.id] })%>
+ 	<%= b.select :tag_list , Tag.all.map{ |x| [x.name, x.name] }, {}, :multiple => true%>
 </div>
-<div class="form-group">
+<!-- <div class="form-group">
 	<%= b.select :tag_ids, Tag.all.map{ |x| [x.name, x.id] }, {}, :multiple => true %>
-</div>
-<div class="form-group">
+</div> -->
+<!-- <div class="form-group">
 	<%= b.collection_check_boxes(:group_ids, Group.all, :id, :name)%>
-</div>
+</div> -->
 <div class="form-group submit">
 	<%= b.submit "schedule"%>
 	<%= b.label :onshelf_day, "On shelf" %>

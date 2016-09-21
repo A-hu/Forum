@@ -21,6 +21,7 @@
 			<th>Comments from</th>
 			<th><%= link_to "Views", books_path(:order => 'views', :commit => params[:commit])%></th>
 			<th><%= link_to "Update time", books_path(:order => 'updated_at', :commit => params[:commit])%></th>
+			<th>Tag</th>
 			<%if current_user%>
 				<th>Subscribe</th>
 				<th>Edit</th>
@@ -47,6 +48,11 @@
 			</td>
 			<td><%= book.views%></td>
 			<td><%= book.updated_at.strftime("%F %H:%M")%></td>
+			<td>
+				<% book.tags.each do |t|%>
+					<%= link_to t.name, books_path(tag: t.name)%>
+				<% end %>
+			</td>
 			<%if current_user%>
 				<%if current_user.subscribed_books.exists?(book.id)%>
 					<td><button class="subs"><%= link_to "Unsubscribe",subscribe_book_path(book), method: :post,remote: true%></button></td>

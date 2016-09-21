@@ -5,11 +5,9 @@ class BooksController < ApplicationController
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
-			
-		gon.tags = Tag.all.map{ |x| x.name }
 
 		if params[:commit].present? && params[:commit] != "All"
-			@books = Group.find_by_name(params[:commit]).books 
+			@books = Group.find_by_name(params[:commit]).books
 		else
 			@books = Book.all
 		end
@@ -34,14 +32,20 @@ class BooksController < ApplicationController
 			# elsif params[:order] == "views"
 			# 	sort_by = 'views DESC'
 			# end
-		if params[:order].present?
-			@books = @books.order("#{params[:order]} DESC")	
-		else
-			@books = @books.order("id DESC")
-		end
 
+		# if params[:order].present?
+		# 	@books = @books.order("#{params[:order]} DESC")	
+		# else
+		# 	@books = @books.order("id DESC")
+		# end
 
+		params[:order] ||= 'id'
+		@books = @books.order("#{params[:order]} DESC")	
+
+		@books = Tag.find_by_name(params[:tag]).books  if params[:tag].present?
 		@books = @books.page( params[:page] ).per(10)
+
+
 
 	end
 
@@ -69,6 +73,7 @@ class BooksController < ApplicationController
 	end
 
 	def create
+
 		@book = Book.new(set_params)
 		@book.user = current_user
 		@book.comment_number = 0
@@ -193,12 +198,11 @@ class BooksController < ApplicationController
 		end
 		
 	end
-
 	private
 
 	def set_params
 		params.require(:book).permit(:name, :description, :user_id, :comment_number, :category_id, :is_public, :logo, 
-									 :onshelf_day, :tag_list, group_ids: [], book_ids: [])
+									 :onshelf_day, :tag_list, group_ids: [], book_ids: [], tag_list: [])
 	end
 
 	def set_before
