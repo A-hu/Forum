@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :set_before, only: [:show, :edit, :update, :collection, :like, :subscribe, :schedule, :schedule, :destroy]
+	before_action :find_book, only: [:show, :edit, :update, :collection, :like, :subscribe, :destroy]
 	before_action :security, only: [:edit, :update, :destroy]
 
 	def index
@@ -15,7 +15,7 @@ class BooksController < ApplicationController
 			#   @books = @books.where('groups.id' => 1)
 			# elsif params[:commit] == "Tragedy"
 			# 	@books = @books.where('groups.id' => 2)
-			# elsif params[:commit] == "NObody"
+			# elsif params[:commit] == "NObody"n 
 			# 	@books = @books.where('groups.id' => 3)
 			# end
 		# end
@@ -64,8 +64,7 @@ class BooksController < ApplicationController
 
 	def about
 		@users = User.all
-		@books = Book.all
-		@comments = Comment.all
+		@books = Book.all		@comments = Comment.all
 	end
 
 	def new
@@ -205,7 +204,7 @@ class BooksController < ApplicationController
 									 :onshelf_day, :tag_list, group_ids: [], book_ids: [], tag_list: [])
 	end
 
-	def set_before
+	def find_book
 		@book = Book.find(params[:id])
 	end
 

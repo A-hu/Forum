@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post :collection
       post :like
       post :subscribe
+      post :schedule
     end
   end
 

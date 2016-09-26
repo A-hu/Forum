@@ -1,5 +1,5 @@
 alert("hello")
-$("#new_book").find(".submit").remove()
+// $("#new_book").find(".submit").remove()
 // $("#new_book").append("<%= b.submit "schedule"%>")
 // $("#new_book").append("<%= b.text_field :onshelf_day%>")
-$("#new_book").append('<%=j render partial: 'schedule' %>')
+$(".schedule input[value=schedule]").remove("input[value=schedule]").append('<%=j render partial: 'schedule' %>')
