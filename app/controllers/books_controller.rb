@@ -64,7 +64,8 @@ class BooksController < ApplicationController
 
 	def about
 		@users = User.all
-		@books = Book.all		@comments = Comment.all
+		@books = Book.all		
+		@comments = Comment.all
 	end
 
 	def new
